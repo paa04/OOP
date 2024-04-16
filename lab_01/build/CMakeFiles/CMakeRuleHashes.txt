@@ -1,3 +1,0 @@
-# Hashes of file build rules.
-b9a3174133b06f681e536468783d2cbc CMakeFiles/MyQtApp_autogen
-de8aee2535cdf65ec096f1673454ef9f ui_MainWindow.h

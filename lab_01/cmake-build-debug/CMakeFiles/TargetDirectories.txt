@@ -1,5 +1,0 @@
-/home/paa04/vs_code/OOP/lab_01/cmake-build-debug/CMakeFiles/MyQtApp.dir
-/home/paa04/vs_code/OOP/lab_01/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/paa04/vs_code/OOP/lab_01/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/paa04/vs_code/OOP/lab_01/cmake-build-debug/CMakeFiles/MyQtApp_autogen_timestamp_deps.dir
-/home/paa04/vs_code/OOP/lab_01/cmake-build-debug/CMakeFiles/MyQtApp_autogen.dir

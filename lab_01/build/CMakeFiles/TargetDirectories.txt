@@ -1,4 +1,0 @@
-/home/paa04/vs_code/OOP/lab_01/build/CMakeFiles/MyQtApp.dir
-/home/paa04/vs_code/OOP/lab_01/build/CMakeFiles/edit_cache.dir
-/home/paa04/vs_code/OOP/lab_01/build/CMakeFiles/rebuild_cache.dir
-/home/paa04/vs_code/OOP/lab_01/build/CMakeFiles/MyQtApp_autogen.dir
