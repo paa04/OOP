@@ -1,15 +1,16 @@
 #include <iostream>
-#include "list_item.hpp"
+#include <map>
+
+#include "const_iterator.hpp"
+#include "list.hpp"
 
 using namespace std;
 
 int main()
 {
-    int a = 10;
+    const_list_iterator<int> it;
 
-    ListItem<int> item(a);
-
-    cout << item.get_value();
+    ++it;
 
     return 0;
 }
