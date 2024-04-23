@@ -5,7 +5,6 @@
 #ifndef CONST_ITERATOR_HPP
 #define CONST_ITERATOR_HPP
 
-#include "const_iterator.h"
 
 template<typename T>
 const_list_iterator<T>::const_list_iterator()

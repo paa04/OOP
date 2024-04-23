@@ -50,4 +50,6 @@ protected:
     std::weak_ptr<list_node<T> > ptr;
 };
 
+#include "const_iterator.hpp"
+
 #endif //CONST_ITERATOR_H

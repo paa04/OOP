@@ -5,8 +5,6 @@
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
 
-#include "iterator.h"
-#include <memory>
 
 template<typename T>
 list_iterator<T>::list_iterator()
@@ -35,7 +33,7 @@ void list_iterator<T>::next(void)
 template<typename T>
 bool list_iterator<T>::is_invalid() const
 {
-    return this->ptr == nullptr;
+    return this->ptr.lock() == nullptr;
 }
 
 template<typename T>
