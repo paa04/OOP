@@ -1,21 +1,21 @@
 //
-// Created by paa04 on 22.04.24.
+// Created by paa04 on 03.05.2024.
 //
 
-#ifndef BASE_CONTAINER_HPP
-#define BASE_CONTAINER_HPP
+#ifndef LAB_02_BASE_CONTAINER_H
+#define LAB_02_BASE_CONTAINER_H
 
-class base_container
+class BaseContainer
 {
 public:
-    virtual bool is_empty() const = 0;
+    virtual bool is_empty() = 0;
 
     virtual void clear() = 0;
 
-    virtual ~base_container() = default;
+    virtual ~BaseContainer() = default;
 
 protected:
-    size_t size;
+    int size;
 };
 
-#endif //BASE_CONTAINER_HPP
+#endif //LAB_02_BASE_CONTAINER_H
