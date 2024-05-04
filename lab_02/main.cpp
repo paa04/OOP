@@ -3,21 +3,27 @@
 #include "vector"
 #include "list.h"
 #include "list_iterator.h"
+#include <forward_list>
+#include "const_list_iterator.h"
 
 using namespace std;
 
 
 int main()
 {
-//    list_iterator<int> it;
 
-    vector<int> v = {1, 2, 3};
+    setbuf(stdout, NULL);
 
-    vector<int>::iterator it = v.begin();
+    list<int> list1;
 
-    auto a = it += 2;
+    list1.push_back(5);
+    list1.push_back(4);
+    list1.push_back(3);
 
-    cout << *a;
+    list<int> list2(list1);
+
+    for(auto it : list2)
+        cout << it.get_value();
 
     return 0;
 }

@@ -2,8 +2,8 @@
 // Created by paa04 on 03.05.2024.
 //
 
-#ifndef LAB_02_LIST_ITEM_HPP
-#define LAB_02_LIST_ITEM_HPP
+#ifndef LAB_02_LIST_NODE_HPP
+#define LAB_02_LIST_NODE_HPP
 
 template<typename T>
 list_node<T>::list_node()
@@ -80,4 +80,4 @@ bool list_node<T>::operator!=(const std::shared_ptr<list_node<T>> &node) const
 }
 
 
-#endif //LAB_02_LIST_ITEM_HPP
+#endif //LAB_02_LIST_NODE_HPP

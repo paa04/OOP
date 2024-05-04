@@ -37,10 +37,10 @@ public:
     bool operator!=(const std::shared_ptr<list_node<T>> &node) const;
 
 private:
-    std::shared_ptr<T> next;
+    std::shared_ptr<list_node<T>> next;
     T data;
 };
 
-#include "list_item.hpp"
+#include "list_node.hpp"
 
 #endif //LAB_02_LIST_NODE_H
