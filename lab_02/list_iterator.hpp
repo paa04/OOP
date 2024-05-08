@@ -37,6 +37,12 @@ list_iterator<T>::operator bool() const
 }
 
 template<typename T>
+bool list_iterator<T>::is_valid() const
+{
+    return !this->ptr.expired();
+}
+
+template<typename T>
 list_iterator<T> &list_iterator<T>::operator++()
 {
     this->next();
@@ -46,7 +52,7 @@ list_iterator<T> &list_iterator<T>::operator++()
 template<typename T>
 list_iterator<T> list_iterator<T>::operator++(int)
 {
-    list_iterator<T> listIterator(this);
+    list_iterator<T> listIterator(*this);
     this->next();
     return listIterator;
 }
@@ -67,22 +73,23 @@ template<typename T>
 list_iterator<T> &list_iterator<T>::operator=(list_iterator<T> &&listIterator) noexcept
 {
     this->ptr = listIterator.ptr;
+    return *this;
 }
 
 template<typename T>
-list_node<T> &list_iterator<T>::operator->() const
+list_node<T> *list_iterator<T>::operator->() const
 {
-    return this->ptr.lock()->get();
+    return this->ptr.lock().get();
 }
 
 template<typename T>
-bool list_iterator<T>::operator==(const list_iterator<T> &iterator)
+bool list_iterator<T>::operator==(const list_iterator<T> &iterator) const
 {
     return this->ptr.lock() == iterator.ptr.lock();
 }
 
 template<typename T>
-bool list_iterator<T>::operator!=(const list_iterator<T> &iterator)
+bool list_iterator<T>::operator!=(const list_iterator<T> &iterator) const
 {
     return this->ptr.lock() != iterator.ptr.lock();
 }
@@ -90,7 +97,7 @@ bool list_iterator<T>::operator!=(const list_iterator<T> &iterator)
 template<typename T>
 list_iterator<T> list_iterator<T>::operator+(const int size) const
 {
-    list_iterator<T> tmp(this);
+    list_iterator<T> tmp(*this);
 
     for (int i = 0; i < size; ++i)
     {

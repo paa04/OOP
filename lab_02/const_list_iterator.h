@@ -25,13 +25,15 @@ public:
 
     explicit operator bool() const;
 
+    bool is_valid() const;
+
     const_list_iterator<T>& operator=(const const_list_iterator<T> &listIterator);
 
     const_list_iterator<T>& operator=(const_list_iterator<T> &&listIterator) noexcept;
 
     const list_node<T>& operator*() const;
 
-    const list_node<T>& operator->() const;
+    const list_node<T>* operator->() const;
 
     const_list_iterator<T>& operator++();
 
@@ -41,9 +43,9 @@ public:
 
     const_list_iterator<T>& operator+=(int size);
 
-    bool operator==(const const_list_iterator<T>& iterator);
+    bool operator==(const const_list_iterator<T>& iterator) const;
 
-    bool operator!=(const const_list_iterator<T>& iterator);
+    bool operator!=(const const_list_iterator<T>& iterator) const;
 
 private:
     std::weak_ptr<list_node<T>> ptr;

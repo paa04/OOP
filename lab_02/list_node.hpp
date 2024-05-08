@@ -26,9 +26,9 @@ list_node<T>::list_node(std::shared_ptr<list_node<T>> &node)
 }
 
 template<typename T>
-void list_node<T>::set(const T &data)
+void list_node<T>::set(const T &node)
 {
-    this->data = data;
+    this->data = node;
 }
 
 template<typename T>
@@ -62,22 +62,28 @@ T& list_node<T>::get_value()
 }
 
 template<typename T>
-std::shared_ptr<list_node<T>> list_node<T>::get_next()
+std::shared_ptr<list_node<T>> list_node<T>::get_next() const
 {
     return this->next;
 }
 
 template<typename T>
-bool list_node<T>::operator==(const std::shared_ptr<list_node<T>> &node) const
+bool list_node<T>::operator==(const list_node<T> &node) const
 {
-    return this == node;
+    return this->get() == node.get();
 }
 
 template<typename T>
-bool list_node<T>::operator!=(const std::shared_ptr<list_node<T>> &node) const
+bool list_node<T>::operator!=(const list_node<T> &node) const
 {
-    return this != node;
+    return this->get() != node.get();
 }
 
+template<typename T_>
+std::ostream &operator<<(std::ostream &os, const list_node<T_> &list)
+{
+    os << list.get();
+    return os;
+}
 
 #endif //LAB_02_LIST_NODE_HPP

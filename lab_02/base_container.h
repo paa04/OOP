@@ -12,6 +12,8 @@ public:
 
     virtual void clear() = 0;
 
+    virtual int get_size() = 0;
+
     virtual ~BaseContainer() = default;
 
 protected:

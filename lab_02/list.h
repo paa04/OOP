@@ -9,9 +9,12 @@
 #include "list_iterator.h"
 #include "const_list_iterator.h"
 #include "list_node.h"
+#include "concepts.h"
+#include "errors.h"
 #include <exception>
+#include <chrono>
 
-template<typename T>
+template<succeed_type T>
 class list : public BaseContainer
 {
 public:
@@ -23,27 +26,75 @@ public:
 
     list(list<T> &&list) noexcept;
 
+    list(const T *arr, int size);
+
     ~list() = default;
+
+    list(std::initializer_list<T> nodes);
+
+    list(const list_iterator<T> &begin, const list_iterator<T> &end);
+
+    list(const const_list_iterator<T> &cbegin, const const_list_iterator<T> &cend);
 
     list<T> &operator=(list <T> &&list) noexcept;
 
+    list_iterator<T> push_front(const T &data);
+
+    list_iterator<T> push_front(const list<T> &data);
+
     list_iterator<T> push_back(const T &data);
-    list_iterator<T> push_back(const list_node<T> &node);
+
+    list_iterator<T> push_back(const list<T> &list);
+
+    list<T>& merge(const T& data);
+
+    list<T>& merge(const list<T>& data);
+
+    T pop_back();
 
     T pop_front();
 
     bool is_empty() override;
+
     void clear() override;
 
+    int get_size() override;
+
+    void reverse();
+
+    list_iterator<T> insert(const list_iterator<T> &iterator, const T &data);
+
+    list_iterator<T> insert(const list_iterator<T> &iterator, const list<T> &data);
+
     list_iterator<T> begin() const;
+
     list_iterator<T> end() const;
 
     const_list_iterator<T> cbegin() const;
+
     const_list_iterator<T> cend() const;
+
+    list<T> &operator+=(const T &data);
+
+    list<T> &operator+=(const list <T> &list);
+
+    list<T> operator+(const T &data);
+
+    list<T> operator+(const list <T> &data);
+
+    list_node<T> &operator[](int index) const;
+
+    bool operator==(const list <T> &data) const;
+
+    bool operator!=(const list <T> &data) const;
 
 protected:
     list_iterator<T> push_back(const std::shared_ptr<list_node<T>> &node);
+
+    list_iterator<T> push_front(const std::shared_ptr<list_node<T>> &node);
+
     std::shared_ptr<list_node<T>> get_head();
+
     std::shared_ptr<list_node<T>> get_tail();
 
 private:

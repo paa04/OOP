@@ -10,7 +10,7 @@
 #include "list_node.h"
 
 template<typename T>
-class list_iterator : std::iterator<std::input_iterator_tag, T>
+class list_iterator : public std::iterator<std::input_iterator_tag, T>
 {
 public:
     list_iterator();
@@ -31,7 +31,7 @@ public:
 
     list_node<T>& operator*() const;
 
-    list_node<T>& operator->() const;
+    list_node<T>* operator->() const;
 
     list_iterator<T>& operator++();
 
@@ -41,9 +41,11 @@ public:
 
     list_iterator<T>& operator+=(int size);
 
-    bool operator==(const list_iterator<T>& iterator);
+    bool is_valid() const;
 
-    bool operator!=(const list_iterator<T>& iterator);
+    bool operator==(const list_iterator<T>& iterator) const;
+
+    bool operator!=(const list_iterator<T>& iterator) const;
 
 private:
     std::weak_ptr<list_node<T>> ptr;
