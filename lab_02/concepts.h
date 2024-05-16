@@ -11,4 +11,12 @@ template<typename T>
 concept succeed_type = std::destructible<T> && std::copyable<T> && std::movable<T>
                        && std::default_initializable<T>;
 
+template<typename Container>
+concept good_container =
+requires(Container c)
+{
+    { c.cbegin() } -> std::same_as<typename Container::const_iterator>;
+    { c.cend() } -> std::same_as<typename Container::const_iterator>;
+};
+
 #endif //LAB_02_CONCEPTS_H

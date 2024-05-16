@@ -203,7 +203,7 @@ list_iterator<T> list<T>::push_front(const std::shared_ptr<list_node<T>> &node)
         this->tail = this->head;
     }
 
-    this->size++;
+    ++this->size;
 
     list_iterator<T> iterator(node);
     return iterator;
@@ -336,6 +336,36 @@ T list<T>::pop_front()
 }
 
 template<succeed_type T>
+T list<T>::remove(const list_iterator<T> &iterator)
+{
+    if (iterator.is_invalid())
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    if (!this->size)
+    {
+        auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        throw empty_list(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+    }
+
+    if (iterator == this->begin())
+    {
+        return pop_front();
+    }
+
+    list_iterator<T> temp_iterator = this->begin();
+    for (; temp_iterator + 1 != iterator; temp_iterator++);
+
+    T data = temp_iterator->get();
+    temp_iterator->set_next(temp_iterator->get_next()->get_next());
+    this->size--;
+
+    return data;
+}
+
+template<succeed_type T>
 T list<T>::pop_back()
 {
     if (!this->size)
@@ -402,6 +432,39 @@ list<T> &list<T>::operator+=(const list <T> &list)
 {
     this->push_back(list);
     return *this;
+}
+
+template<succeed_type T>
+list<T> &list<T>::operator-=(const T &data)
+{
+    bool find_flag = false;
+    for (auto i = this->begin(); !find_flag && i != this->end(); ++i)
+    {
+        if (i->get() == data)
+        {
+            list_iterator<T> tmp(i);
+            this->remove(tmp);
+            find_flag = true;
+        }
+    }
+    return *this;
+}
+
+template<succeed_type T>
+list<T> list<T>::operator-(const T &data)
+{
+    list<T> tmp(*this);
+    bool find_flag = false;
+    for (auto i = tmp->begin(); !find_flag && i != tmp->end(); ++i)
+    {
+        if (i->get() == data)
+        {
+            list_iterator<T> temp_it(i);
+            tmp.remove(temp_it);
+            find_flag = true;
+        }
+    }
+    return tmp;
 }
 
 template<succeed_type T>

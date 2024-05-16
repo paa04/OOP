@@ -14,7 +14,6 @@ int main(void)
 {
     setbuf(stdout, NULL);
 
-
     // Тест кострукторов
     std::cout << "Constructor 1 test: ";
     list<int> list1;
@@ -183,9 +182,9 @@ int main(void)
     {
         cout << list14[5];
     }
-    catch (size_error&)
+    catch (size_error& e)
     {
-        cout << "\nException success.";
+        cout << "\nException success. ";
     }
 
     cout << "\nException test #2";
@@ -237,6 +236,8 @@ int main(void)
     {
         std::cout << "test2 done";
     }
+
+
 
     return 0;
 }

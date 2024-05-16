@@ -13,6 +13,9 @@ template<typename T>
 class const_list_iterator: std::iterator<std::input_iterator_tag, T>
 {
 public:
+    using iterator_category = std::forward_iterator_tag;
+    using value_type = T;
+
     const_list_iterator();
 
     explicit const_list_iterator(const std::shared_ptr<list_node<T>> &ptr);
@@ -51,6 +54,7 @@ private:
     std::weak_ptr<list_node<T>> ptr;
 
 };
+
 
 #include "const_list_iterator.hpp"
 

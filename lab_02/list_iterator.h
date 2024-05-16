@@ -13,6 +13,9 @@ template<typename T>
 class list_iterator : public std::iterator<std::input_iterator_tag, T>
 {
 public:
+    using iterator_category = std::forward_iterator_tag;
+    using value_type = T;
+
     list_iterator();
 
     explicit list_iterator(const std::shared_ptr<list_node<T>> &ptr);

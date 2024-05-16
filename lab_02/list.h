@@ -18,6 +18,9 @@ template<succeed_type T>
 class list : public BaseContainer
 {
 public:
+    using iterator = list_iterator<T>;
+    using const_iterator = const_list_iterator<T>;
+
     list();
 
     explicit list(const list<T> &list);
@@ -26,17 +29,17 @@ public:
 
     list(list<T> &&list) noexcept;
 
-    list(const T *arr, int size);
+    list<T> &operator=(list <T> &&list) noexcept;
 
     ~list() = default;
+
+    list(const T *arr, int size);
 
     list(std::initializer_list<T> nodes);
 
     list(const list_iterator<T> &begin, const list_iterator<T> &end);
 
     list(const const_list_iterator<T> &cbegin, const const_list_iterator<T> &cend);
-
-    list<T> &operator=(list <T> &&list) noexcept;
 
     list_iterator<T> push_front(const T &data);
 
@@ -53,6 +56,8 @@ public:
     T pop_back();
 
     T pop_front();
+
+    T remove(const list_iterator<T> &iterator);
 
     bool is_empty() override;
 
@@ -77,6 +82,10 @@ public:
     list<T> &operator+=(const T &data);
 
     list<T> &operator+=(const list <T> &list);
+
+    list<T> &operator-=(const T &data);
+
+    list<T> operator-(const T &data);
 
     list<T> operator+(const T &data);
 
