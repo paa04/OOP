@@ -16,4 +16,5 @@ add_executable(lab_02 main.cpp
         const_list_iterator.h
         const_list_iterator.hpp
         concepts.h
-        errors.h)
+        errors.h
+        base_iterator.h)

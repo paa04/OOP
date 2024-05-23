@@ -10,7 +10,7 @@
 #include "list_node.h"
 
 template<typename T>
-class const_list_iterator: std::iterator<std::input_iterator_tag, T>
+class const_list_iterator
 {
 public:
     using iterator_category = std::forward_iterator_tag;
@@ -52,7 +52,6 @@ public:
 
 private:
     std::weak_ptr<list_node<T>> ptr;
-
 };
 
 

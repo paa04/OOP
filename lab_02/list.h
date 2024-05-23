@@ -37,7 +37,8 @@ public:
 
     list(std::initializer_list<T> nodes);
 
-    list(const list_iterator<T> &begin, const list_iterator<T> &end);
+    template<Iterator it>
+    list(const it &begin, const it &end);
 
     list(const const_list_iterator<T> &cbegin, const const_list_iterator<T> &cend);
 
@@ -49,15 +50,31 @@ public:
 
     list_iterator<T> push_back(const list<T> &list);
 
+    list_iterator<T> insert(const list_iterator<T> &iterator, const T &data);
+
+    list_iterator<T> insert(const list_iterator<T> &iterator, const list<T> &data);
+
     list<T>& merge(const T& data);
 
     list<T>& merge(const list<T>& data);
+
+    list<T> &operator+=(const T &data);
+
+    list<T> &operator+=(const list <T> &list);
+
+    list<T> operator+(const T &data);
+
+    list<T> operator+(const list <T> &data);
 
     T pop_back();
 
     T pop_front();
 
     T remove(const list_iterator<T> &iterator);
+
+    list<T> &operator-=(const T &data);
+
+    list<T> operator-(const T &data);
 
     bool is_empty() override;
 
@@ -67,10 +84,6 @@ public:
 
     void reverse();
 
-    list_iterator<T> insert(const list_iterator<T> &iterator, const T &data);
-
-    list_iterator<T> insert(const list_iterator<T> &iterator, const list<T> &data);
-
     list_iterator<T> begin() const;
 
     list_iterator<T> end() const;
@@ -78,20 +91,6 @@ public:
     const_list_iterator<T> cbegin() const;
 
     const_list_iterator<T> cend() const;
-
-    list<T> &operator+=(const T &data);
-
-    list<T> &operator+=(const list <T> &list);
-
-    list<T> &operator-=(const T &data);
-
-    list<T> operator-(const T &data);
-
-    list<T> operator+(const T &data);
-
-    list<T> operator+(const list <T> &data);
-
-    list_node<T> &operator[](int index) const;
 
     bool operator==(const list <T> &data) const;
 

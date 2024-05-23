@@ -10,7 +10,7 @@
 #include "list_node.h"
 
 template<typename T>
-class list_iterator : public std::iterator<std::input_iterator_tag, T>
+class list_iterator
 {
 public:
     using iterator_category = std::forward_iterator_tag;

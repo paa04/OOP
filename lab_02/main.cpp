@@ -174,18 +174,6 @@ int main(void)
 
     cout << "\nTest [] operator: ";
     list<int> list14{1, 2, 3};
-    cout << list14[1];
-
-    cout << "\nException test.";
-
-    try
-    {
-        cout << list14[5];
-    }
-    catch (size_error& e)
-    {
-        cout << "\nException success. ";
-    }
 
     cout << "\nException test #2";
 

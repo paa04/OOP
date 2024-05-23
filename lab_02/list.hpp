@@ -28,7 +28,7 @@ list<T>::list(const list<T> &list)
         {
             temp_node = std::make_shared<list_node<T>>();
         }
-        catch (std::bad_alloc&)
+        catch (std::bad_alloc &)
         {
             auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             throw mem_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
@@ -86,16 +86,16 @@ list<T>::list(std::initializer_list<T> nodes)
 }
 
 template<succeed_type T>
-list<T>::list(const list_iterator<T> &begin,
-              const list_iterator<T> &end)
+template<Iterator it>
+list<T>::list(const it &begin, const it &end)
 {
     this->size = 0;
     this->head = nullptr;
     this->tail = nullptr;
 
-    for (auto it = begin; it != end; ++it)
+    for (auto i = begin; i != end; ++i)
     {
-        this->push_back(it->get());
+        this->push_back(*i);
     }
 }
 
@@ -504,22 +504,6 @@ template<succeed_type T>
 bool list<T>::operator!=(const list <T> &data) const
 {
     return !(*this == data);
-}
-
-template<succeed_type T>
-list_node<T> &list<T>::operator[](int index) const
-{
-    if (index >= this->size)
-    {
-        auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-        throw size_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
-    }
-
-    auto it = this->begin();
-
-    for (int i = 0; i < index; ++i, ++it);
-
-    return *it;
 }
 
 template<succeed_type T>
