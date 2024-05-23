@@ -34,7 +34,7 @@ list<T>::list(const list<T> &list)
             throw mem_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
         }
 
-        temp_node->set((*node).get());
+        temp_node->set(*node);
         this->push_back(temp_node);
     }
 }
@@ -100,20 +100,6 @@ list<T>::list(const it &begin, const it &end)
 }
 
 template<succeed_type T>
-list<T>::list(const const_list_iterator<T> &cbegin,
-              const const_list_iterator<T> &cend)
-{
-    this->size = 0;
-    this->head = nullptr;
-    this->tail = nullptr;
-
-    for (auto it = cbegin; it != cend; ++it)
-    {
-        this->push_back(it->get());
-    }
-}
-
-template<succeed_type T>
 list<T> &list<T>::operator=(const list<T> &list)
 {
     this->clear();
@@ -131,7 +117,7 @@ list<T> &list<T>::operator=(const list<T> &list)
             throw mem_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
         }
 
-        temp_node->set((*node).get());
+        temp_node->set(*node);
         this->push_back(temp_node);
     }
 
@@ -235,7 +221,7 @@ list_iterator<T> list<T>::push_back(const list<T> &list)
             throw mem_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
         }
 
-        temp_node->set((*node).get());
+        temp_node->set(*node);
         this->push_back(temp_node);
     }
 
@@ -537,7 +523,7 @@ list_iterator<T> list<T>::push_front(const list<T> &data)
 
     for (int i = 0; i < data.size; i++)
     {
-        iterator = this->insert(this->begin() + i, (*(data.cbegin() + i)).get());
+        iterator = this->insert(this->begin() + i, (*(data.cbegin() + i)));
     }
 
     return iterator;
@@ -577,8 +563,10 @@ list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const T &data
     list_iterator<T> temp_iterator = this->begin();
     for (; temp_iterator + 1 != iterator; temp_iterator++);
 
-    temp_node->set_next(temp_iterator->get_next());
-    temp_iterator->set_next(temp_node);
+    std::shared_ptr<list_node<T>> ptr = temp_iterator.get_node();
+
+    temp_node->set_next(ptr->get_next());
+    ptr->set_next(temp_node);
     this->size++;
 
     list_iterator<T> insert_iterator(temp_node);
@@ -598,7 +586,7 @@ list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const list<T>
 
     for (int i = 0; i < list.size; i++)
     {
-        insert_iterator = insert(iterator, (*(list.cbegin() + i)).get());
+        insert_iterator = insert(iterator, (*(list.cbegin() + i)));
     }
 
     return insert_iterator;
@@ -609,7 +597,7 @@ std::ostream &operator<<(std::ostream &os, const list<T_> &list)
 {
     for (auto iterator = list.cbegin(); iterator != list.cend(); iterator++)
     {
-        os << (*iterator).get() << " ";
+        os << (*iterator) << " ";
     }
 
     return os;

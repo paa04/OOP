@@ -15,7 +15,14 @@ int main(void)
     setbuf(stdout, NULL);
 
     // Тест кострукторов
-    std::cout << "Constructor 1 test: ";
+
+    cout << "Universal constructor test: ";
+
+    vector<int> v = {1, 2, 3, 4, 5};
+    list<int> list0(v.begin(), v.end());
+    print_list(list0);
+
+    std::cout << "\nConstructor 1 test: ";
     list<int> list1;
 
     std::cout << "\nConstructor 2 test: ";
@@ -57,7 +64,7 @@ int main(void)
 
     while (iterator != list6.end())
     {
-        std::cout << " " << (*iterator).get();
+        std::cout << " " << (*iterator);
         iterator++;
     }
 
@@ -160,7 +167,7 @@ int main(void)
 
     while (++iterator2 != iterator3)
     {
-        std::cout << (*iterator2).get() << " ";
+        std::cout << (*iterator2) << " ";
     }
 
     list<int> list11 = {1, 2, 3};
@@ -172,7 +179,6 @@ int main(void)
     list12.merge(505);
     print_list(list12);
 
-    cout << "\nTest [] operator: ";
     list<int> list14{1, 2, 3};
 
     cout << "\nException test #2";
@@ -181,7 +187,7 @@ int main(void)
     {
         list14.insert(list14.begin() + 7, 12);
     }
-    catch (iterator_error&)
+    catch (iterator_error &)
     {
         cout << "\nException test #2 succeed";
     }
@@ -224,7 +230,6 @@ int main(void)
     {
         std::cout << "test2 done";
     }
-
 
 
     return 0;

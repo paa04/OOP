@@ -24,6 +24,8 @@ public:
 
     ~const_list_iterator() = default;
 
+    std::shared_ptr<const list_node<T>> get_node() const;
+
     void next();
 
     explicit operator bool() const;
@@ -34,9 +36,9 @@ public:
 
     const_list_iterator<T>& operator=(const_list_iterator<T> &&listIterator) noexcept;
 
-    const list_node<T>& operator*() const;
+    const T& operator*() const;
 
-    const list_node<T>* operator->() const;
+    const T* operator->() const;
 
     const_list_iterator<T>& operator++();
 

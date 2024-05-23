@@ -24,6 +24,12 @@ const_list_iterator<T>::const_list_iterator(const std::shared_ptr<list_node<T>> 
 }
 
 template<typename T>
+std::shared_ptr<const list_node<T>> const_list_iterator<T>::get_node() const
+{
+    return this->ptr.lock();
+}
+
+template<typename T>
 void const_list_iterator<T>::next()
 {
     if (!this->ptr.expired())
@@ -57,16 +63,17 @@ const_list_iterator<T> &const_list_iterator<T>::operator=(const_list_iterator<T>
 }
 
 template<typename T>
-const list_node<T> &const_list_iterator<T>::operator*() const
+const T &const_list_iterator<T>::operator*() const
 {
-    return *this->ptr.lock();
+    return (*this->ptr.lock()).get_value();
 }
 
 template<typename T>
-const list_node<T> *const_list_iterator<T>::operator->() const
+const T *const_list_iterator<T>::operator->() const
 {
-    return this->ptr.lock().get();
+    return &this->ptr.lock()->get();
 }
+
 
 template<typename T>
 const_list_iterator<T> &const_list_iterator<T>::operator++()

@@ -39,9 +39,7 @@ public:
 
     template<Iterator it>
     list(const it &begin, const it &end);
-
-    list(const const_list_iterator<T> &cbegin, const const_list_iterator<T> &cend);
-
+    
     list_iterator<T> push_front(const T &data);
 
     list_iterator<T> push_front(const list<T> &data);
