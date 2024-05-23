@@ -21,11 +21,11 @@ requires(Container c)
 
 template<typename T>
 concept Iterator = requires(T iter) {
-    {*iter};         // Итератор должен поддерживать разыменование
-    {++iter} -> std::same_as<T&>;  // Итератор должен поддерживать префиксный инкремент
-    {iter++} -> std::same_as<T>;   // Итератор должен поддерживать постфиксный инкремент
-    {iter == iter} -> std::convertible_to<bool>;  // Итераторы должны быть сравнимы на равенство
-    {iter != iter} -> std::convertible_to<bool>;  // Итераторы должны быть сравнимы на неравенство
+    {*iter};
+    {++iter} -> std::same_as<T&>;
+    {iter++} -> std::same_as<T>;
+    {iter == iter} -> std::convertible_to<bool>;
+    {iter != iter} -> std::convertible_to<bool>;
 };
 
 

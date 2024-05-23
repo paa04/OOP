@@ -39,7 +39,7 @@ public:
 
     template<Iterator it>
     list(const it &begin, const it &end);
-    
+
     list_iterator<T> push_front(const T &data);
 
     list_iterator<T> push_front(const list<T> &data);
@@ -70,10 +70,6 @@ public:
 
     T remove(const list_iterator<T> &iterator);
 
-    list<T> &operator-=(const T &data);
-
-    list<T> operator-(const T &data);
-
     bool is_empty() override;
 
     void clear() override;
@@ -89,6 +85,8 @@ public:
     const_list_iterator<T> cbegin() const;
 
     const_list_iterator<T> cend() const;
+
+    list<T> sublist(const_list_iterator<T>, const_list_iterator<T>) const;
 
     bool operator==(const list <T> &data) const;
 

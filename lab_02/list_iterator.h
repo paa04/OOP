@@ -8,9 +8,10 @@
 #include <iterator>
 #include <memory>
 #include "list_node.h"
+#include "base_iterator.h"
 
 template<typename T>
-class list_iterator
+class list_iterator: public base_iterator<T>
 {
 public:
     using iterator_category = std::forward_iterator_tag;

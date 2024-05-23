@@ -287,6 +287,13 @@ const_list_iterator<T> list<T>::cend() const
 }
 
 template<succeed_type T>
+list<T> list<T>::sublist(const const_list_iterator<T> begin, const const_list_iterator<T> end) const
+{
+    list<T> list(begin, end);
+    return list;
+}
+
+template<succeed_type T>
 std::shared_ptr<list_node<T>> list<T>::get_head()
 {
     return head;
@@ -418,39 +425,6 @@ list<T> &list<T>::operator+=(const list <T> &list)
 {
     this->push_back(list);
     return *this;
-}
-
-template<succeed_type T>
-list<T> &list<T>::operator-=(const T &data)
-{
-    bool find_flag = false;
-    for (auto i = this->begin(); !find_flag && i != this->end(); ++i)
-    {
-        if (i->get() == data)
-        {
-            list_iterator<T> tmp(i);
-            this->remove(tmp);
-            find_flag = true;
-        }
-    }
-    return *this;
-}
-
-template<succeed_type T>
-list<T> list<T>::operator-(const T &data)
-{
-    list<T> tmp(*this);
-    bool find_flag = false;
-    for (auto i = tmp->begin(); !find_flag && i != tmp->end(); ++i)
-    {
-        if (i->get() == data)
-        {
-            list_iterator<T> temp_it(i);
-            tmp.remove(temp_it);
-            find_flag = true;
-        }
-    }
-    return tmp;
 }
 
 template<succeed_type T>

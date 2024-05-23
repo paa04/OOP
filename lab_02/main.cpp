@@ -231,6 +231,13 @@ int main(void)
         std::cout << "test2 done";
     }
 
+    cout << "\nSublist test";
+
+    list<int> list15 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    list<int> sublist = list15.sublist(list15.cbegin() + 3, list15.cend());
+
+    cout << endl << sublist;
 
     return 0;
 }
