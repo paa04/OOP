@@ -104,8 +104,6 @@ int main(void)
     list8.pop_back();
     print_list(list8);
 
-
-
     // Тест reverse
     std::cout << "\nReverse list (list3): ";
     list3.reverse();

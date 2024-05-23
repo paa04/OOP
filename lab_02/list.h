@@ -40,29 +40,53 @@ public:
     template<Iterator it>
     list(const it &begin, const it &end);
 
-    list_iterator<T> push_front(const T &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list_iterator<T> push_front(const U &data);
 
-    list_iterator<T> push_front(const list<T> &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list_iterator<T> push_front(const list<U> &data);
 
-    list_iterator<T> push_back(const T &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list_iterator<T> push_back(const U &data);
 
-    list_iterator<T> push_back(const list<T> &list);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list_iterator<T> push_back(const list<U> &list);
 
-    list_iterator<T> insert(const list_iterator<T> &iterator, const T &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list_iterator<T> insert(const list_iterator<U> &iterator, const U &data);
 
-    list_iterator<T> insert(const list_iterator<T> &iterator, const list<T> &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list_iterator<T> insert(const list_iterator<U> &iterator, const list<U> &data);
 
-    list<T>& merge(const T& data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list<T>& merge(const U& data);
 
-    list<T>& merge(const list<T>& data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list<T>& merge(const list<U>& data);
 
-    list<T> &operator+=(const T &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list<T> &operator+=(const U &data);
 
-    list<T> &operator+=(const list <T> &list);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list<T> &operator+=(const list <U> &list);
 
-    list<T> operator+(const T &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list<T> operator+(const U &data);
 
-    list<T> operator+(const list <T> &data);
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    list<T> operator+(const list <U> &data);
 
     T pop_back();
 
@@ -88,9 +112,13 @@ public:
 
     list<T> sublist(const_list_iterator<T>, const_list_iterator<T>) const;
 
-    bool operator==(const list <T> &data) const;
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    bool operator==(const list <U> &data) const;
 
-    bool operator!=(const list <T> &data) const;
+    template<succeed_type U>
+    requires std::convertible_to<U, T>
+    bool operator!=(const list <U> &data) const;
 
 protected:
     list_iterator<T> push_back(const std::shared_ptr<list_node<T>> &node);

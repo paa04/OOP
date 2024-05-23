@@ -11,7 +11,7 @@
 #include "base_iterator.h"
 
 template<typename T>
-class list_iterator: public base_iterator<T>
+class list_iterator
 {
 public:
     using iterator_category = std::forward_iterator_tag;

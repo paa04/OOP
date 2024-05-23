@@ -196,7 +196,9 @@ list_iterator<T> list<T>::push_front(const std::shared_ptr<list_node<T>> &node)
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::push_back(const T &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list_iterator<T> list<T>::push_back(const U &data)
 {
     std::shared_ptr<list_node<T>> tmp{std::make_shared<list_node<T>>()};
 
@@ -206,7 +208,9 @@ list_iterator<T> list<T>::push_back(const T &data)
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::push_back(const list<T> &list)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list_iterator<T> list<T>::push_back(const list<U> &list)
 {
     for (auto node = list.cbegin(); node != list.cend(); ++node)
     {
@@ -229,14 +233,18 @@ list_iterator<T> list<T>::push_back(const list<T> &list)
 }
 
 template<succeed_type T>
-list<T> &list<T>::merge(const T &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T> &list<T>::merge(const U &data)
 {
     this->push_back(data);
     return *this;
 }
 
 template<succeed_type T>
-list<T> &list<T>::merge(const list<T> &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T> &list<T>::merge(const list<U> &data)
 {
     this->push_back(data);
     return *this;
@@ -414,21 +422,27 @@ int list<T>::get_size()
 }
 
 template<succeed_type T>
-list<T> &list<T>::operator+=(const T &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T> &list<T>::operator+=(const U &data)
 {
     this->push_back(data);
     return *this;
 }
 
 template<succeed_type T>
-list<T> &list<T>::operator+=(const list <T> &list)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T> &list<T>::operator+=(const list <U> &list)
 {
     this->push_back(list);
     return *this;
 }
 
 template<succeed_type T>
-list<T> list<T>::operator+(const T &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T> list<T>::operator+(const U &data)
 {
     list<T> tmp(this);
     tmp.push_back(data);
@@ -436,7 +450,9 @@ list<T> list<T>::operator+(const T &data)
 }
 
 template<succeed_type T>
-list<T> list<T>::operator+(const list <T> &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T> list<T>::operator+(const list <U> &data)
 {
     list<T> tmp(*this);
     tmp.push_back(data);
@@ -444,7 +460,9 @@ list<T> list<T>::operator+(const list <T> &data)
 }
 
 template<succeed_type T>
-bool list<T>::operator==(const list <T> &data) const
+template<succeed_type U>
+requires std::convertible_to<U, T>
+bool list<T>::operator==(const list <U> &data) const
 {
     if (this->size != data.size)
         return false;
@@ -461,13 +479,17 @@ bool list<T>::operator==(const list <T> &data) const
 }
 
 template<succeed_type T>
-bool list<T>::operator!=(const list <T> &data) const
+template<succeed_type U>
+requires std::convertible_to<U, T>
+bool list<T>::operator!=(const list <U> &data) const
 {
     return !(*this == data);
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::push_front(const T &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list_iterator<T> list<T>::push_front(const U &data)
 {
     std::shared_ptr<list_node<T>> ptr = nullptr;
 
@@ -491,7 +513,9 @@ list_iterator<T> list<T>::push_front(const T &data)
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::push_front(const list<T> &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list_iterator<T> list<T>::push_front(const list<U> &data)
 {
     list_iterator<T> iterator;
 
@@ -504,7 +528,9 @@ list_iterator<T> list<T>::push_front(const list<T> &data)
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const T &data)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const U &data)
 {
     if (!iterator.is_valid())
     {
@@ -548,7 +574,9 @@ list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const T &data
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const list<T> &list)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const list<U> &list)
 {
     if (!iterator.is_valid())
     {
@@ -566,7 +594,7 @@ list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const list<T>
     return insert_iterator;
 }
 
-template<typename T_>
+template<succeed_type T_>
 std::ostream &operator<<(std::ostream &os, const list<T_> &list)
 {
     for (auto iterator = list.cbegin(); iterator != list.cend(); iterator++)
