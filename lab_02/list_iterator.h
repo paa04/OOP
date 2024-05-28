@@ -5,18 +5,14 @@
 #ifndef LAB_02_LIST_ITERATOR_H
 #define LAB_02_LIST_ITERATOR_H
 
-#include <iterator>
 #include <memory>
 #include "list_node.h"
 #include "base_iterator.h"
 
 template<typename T>
-class list_iterator
+class list_iterator: public BaseIterator<T>
 {
 public:
-    using iterator_category = std::forward_iterator_tag;
-    using value_type = T;
-
     list_iterator();
 
     explicit list_iterator(const std::shared_ptr<list_node<T>> &ptr);
@@ -49,12 +45,9 @@ public:
 
     bool is_valid() const;
 
-    bool operator==(const list_iterator<T>& iterator) const;
+    bool operator==(const list_iterator<T> &it) const;
 
-    bool operator!=(const list_iterator<T>& iterator) const;
-
-private:
-    std::weak_ptr<list_node<T>> ptr;
+    bool operator!=(const list_iterator<T> &it) const;
 };
 
 #include "list_iterator.hpp"

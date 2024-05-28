@@ -5,16 +5,13 @@
 #ifndef LAB_02_CONST_LIST_ITERATOR_H
 #define LAB_02_CONST_LIST_ITERATOR_H
 
-#include <iterator>
 #include <memory>
 #include "list_node.h"
 
 template<typename T>
-class const_list_iterator
+class const_list_iterator: BaseIterator<T>
 {
 public:
-    using iterator_category = std::forward_iterator_tag;
-    using value_type = T;
 
     const_list_iterator();
 
@@ -51,9 +48,6 @@ public:
     bool operator==(const const_list_iterator<T>& iterator) const;
 
     bool operator!=(const const_list_iterator<T>& iterator) const;
-
-private:
-    std::weak_ptr<list_node<T>> ptr;
 };
 
 

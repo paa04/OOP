@@ -26,79 +26,79 @@ public:
     explicit list(const list<T> &list);
 
     template<succeed_type U>
-    requires(std::convertible_to<U,T>)
+        requires(std::convertible_to<U, T>)
     explicit list(const list<U> &list);
 
     list<T> &operator=(const list<T> &list);
 
     template<succeed_type U>
-    requires(std::convertible_to<U,T>)
+        requires(std::convertible_to<U, T>)
     list<T> &operator=(const list<U> &list);
 
     list(list<T> &&list) noexcept;
 
-    list<T> &operator=(list <T> &&list) noexcept;
+    list<T> &operator=(list<T> &&list) noexcept;
 
     ~list() = default;
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list(const U *arr, int size);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list(std::initializer_list<U> nodes);
 
     template<Iterator it>
     list(const it &begin, const it &end);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list_iterator<T> push_front(const U &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list_iterator<T> push_front(const list<U> &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list_iterator<T> push_back(const U &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list_iterator<T> push_back(const list<U> &list);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list_iterator<T> insert(const list_iterator<U> &iterator, const U &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list_iterator<T> insert(const list_iterator<U> &iterator, const list<U> &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
-    list<T>& merge(const U& data);
+        requires std::convertible_to<U, T>
+    list<T> &merge(const U &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
-    list<T>& merge(const list<U>& data);
+        requires std::convertible_to<U, T>
+    list<T> &merge(const list<U> &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list<T> &operator+=(const U &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
-    list<T> &operator+=(const list <U> &list);
+        requires std::convertible_to<U, T>
+    list<T> &operator+=(const list<U> &list);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
+        requires std::convertible_to<U, T>
     list<T> operator+(const U &data);
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
-    list<T> operator+(const list <U> &data);
+        requires std::convertible_to<U, T>
+    list<T> operator+(const list<U> &data);
 
     T pop_back();
 
@@ -125,25 +125,25 @@ public:
     list<T> sublist(const_list_iterator<T>, const_list_iterator<T>) const;
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
-    bool operator==(const list <U> &data) const;
+        requires std::convertible_to<U, T>
+    bool operator==(const list<U> &data) const;
 
     template<succeed_type U>
-    requires std::convertible_to<U, T>
-    bool operator!=(const list <U> &data) const;
+        requires std::convertible_to<U, T>
+    bool operator!=(const list<U> &data) const;
 
 protected:
-    list_iterator<T> push_back(const std::shared_ptr<list_node<T>> &node);
+    list_iterator<T> push_back(const std::shared_ptr<list_node<T> > &node);
 
-    list_iterator<T> push_front(const std::shared_ptr<list_node<T>> &node);
+    list_iterator<T> push_front(const std::shared_ptr<list_node<T> > &node);
 
-    std::shared_ptr<list_node<T>> get_head();
+    std::shared_ptr<list_node<T> > get_head();
 
-    std::shared_ptr<list_node<T>> get_tail();
+    std::shared_ptr<list_node<T> > get_tail();
 
 private:
-    std::shared_ptr<list_node<T>> head;
-    std::shared_ptr<list_node<T>> tail;
+    std::shared_ptr<list_node<T> > head;
+    std::shared_ptr<list_node<T> > tail;
     int size{};
 };
 

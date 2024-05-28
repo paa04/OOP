@@ -89,16 +89,18 @@ list_iterator<T> &list_iterator<T>::operator=(list_iterator<T> &&listIterator) n
 }
 
 template<typename T>
-bool list_iterator<T>::operator==(const list_iterator<T> &iterator) const
+bool list_iterator<T>::operator==(const list_iterator<T> &it) const
 {
-    return this->ptr.lock() == iterator.ptr.lock();
+    return this->ptr.lock() == it.ptr.lock();
 }
 
+
 template<typename T>
-bool list_iterator<T>::operator!=(const list_iterator<T> &iterator) const
+bool list_iterator<T>::operator!=(const list_iterator<T> &it) const
 {
-    return this->ptr.lock() != iterator.ptr.lock();
+    return this->ptr.lock() != it.ptr.lock();
 }
+
 
 template<typename T>
 list_iterator<T> list_iterator<T>::operator+(const int size) const
