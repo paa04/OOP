@@ -40,6 +40,35 @@ list<T>::list(const list<T> &list)
 }
 
 template<succeed_type T>
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T>::list(const list<U> &list)
+{
+    this->size = 0;
+    this->head = nullptr;
+    this->tail = nullptr;
+
+    for (auto node = list.cbegin(); node != list.cend(); ++node)
+    {
+        std::shared_ptr<list_node<T>> temp_node = nullptr;
+
+        try
+        {
+            temp_node = std::make_shared<list_node<T>>();
+        }
+        catch (std::bad_alloc &)
+        {
+            auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            throw mem_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
+        }
+
+        temp_node->set(*node);
+        this->push_back(temp_node);
+    }
+}
+
+
+template<succeed_type T>
 list<T>::list(list<T> &&list) noexcept
 {
     this->size = list.size;
@@ -48,7 +77,9 @@ list<T>::list(list<T> &&list) noexcept
 }
 
 template<succeed_type T>
-list<T>::list(const T *arr, int size)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T>::list(const U *arr, int size)
 {
     this->size = 0;
     this->head = nullptr;
@@ -73,7 +104,9 @@ list<T>::list(const T *arr, int size)
 }
 
 template<succeed_type T>
-list<T>::list(std::initializer_list<T> nodes)
+template<succeed_type U>
+requires std::convertible_to<U, T>
+list<T>::list(std::initializer_list<U> nodes)
 {
     this->size = 0;
     this->head = nullptr;
@@ -101,6 +134,33 @@ list<T>::list(const it &begin, const it &end)
 
 template<succeed_type T>
 list<T> &list<T>::operator=(const list<T> &list)
+{
+    this->clear();
+
+    for (auto node = list.cbegin(); node != list.cend(); ++node)
+    {
+        std::shared_ptr<list_node<T>> temp_node = nullptr;
+
+        try
+        {
+            temp_node = std::make_shared<list_node<T>>();
+        } catch (std::bad_alloc &error)
+        {
+            auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            throw mem_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
+        }
+
+        temp_node->set(*node);
+        this->push_back(temp_node);
+    }
+
+    return *this;
+}
+
+template<succeed_type T>
+template<succeed_type U>
+requires(std::convertible_to<U,T>)
+list<T> &list<T>::operator=(const list<U> &list)
 {
     this->clear();
 
