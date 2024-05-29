@@ -248,5 +248,9 @@ int main(void)
 
     cout << endl << list15;
 
+    list15.push_front(lol);
+
+    cout << endl << list15;
+
     return 0;
 }

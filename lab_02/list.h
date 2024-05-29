@@ -63,6 +63,9 @@ public:
         requires std::convertible_to<U, T>
     list_iterator<T> push_front(const list<U> &data);
 
+    template<succeed_container C>
+    list_iterator<T> push_front(const C& container);
+
     template<succeed_type U>
         requires std::convertible_to<U, T>
     list_iterator<T> push_back(const U &data);

@@ -11,107 +11,99 @@
 
 class base_error : public std::exception
 {
-public:
-    base_error(std::string time,
-               std::string filename, std::string classname, std::string methodname)
-    {
-        error_info = "\nTime: " + time + \
-                     "File: " + filename + \
-                     "\nClass: " + classname + \
-                     "\nMethod: " + methodname;
-    }
-
-    virtual const char *what() const noexcept override
-    {
-        std::string message = "\nERROR: Something is wrong with your list." + error_info;
-        char *cmessage = new char[1 + message.size()];
-        strcpy(cmessage, message.c_str());
-        return cmessage;
-    }
-
 protected:
-    std::string error_info;
+    base_error(std::string time,
+               std::string filename, std::string classname, std::string methodname, std::string info)
+    {
+        snprintf(error_info, 256, "\nTime: %sFile: %s\nClass: %s\nMethod: %s\nInfo: %s\n", time.c_str(),
+                 filename.c_str(),
+                 classname.c_str(), methodname.c_str(), info.c_str());
+    }
+
+    const char *what() const noexcept override
+    {
+        return error_info;
+    }
+
+    char error_info[256];
 };
 
-class mem_error : public base_error
+class ListError : public base_error
+{
+protected:
+    ListError(std::string time,
+              std::string filename, std::string classname, std::string methodname, std::string info): base_error(time,
+        filename, classname, methodname, info)
+    {
+    }
+};
+
+class IterError : public base_error
+{
+protected:
+    IterError(std::string time,
+              std::string filename, std::string classname, std::string methodname, std::string info): base_error(time,
+        filename, classname, methodname, info)
+    {
+    }
+};
+
+class AllocError : public base_error
+{
+protected:
+    AllocError(std::string time,
+               std::string filename, std::string classname, std::string methodname, std::string info): base_error(time,
+        filename, classname, methodname, info)
+    {
+    }
+};
+
+class mem_error : public AllocError
 {
 public:
     mem_error(std::string time, std::string filename,
               std::string classname, std::string methodname)
-            : base_error(time, filename, classname, methodname)
-    {};
-
-    virtual const char *what() const noexcept override
+        : AllocError(time, filename, classname, methodname, "error: Unable to allocate memory.")
     {
-        std::string message = "\nERROR: Unable to allocate memory. " + error_info;
-        char *cmessage = new char[1 + message.size()];
-        std::strcpy(cmessage, message.c_str());
-        return cmessage;
-    }
+    };
 };
 
-class empty_list : public base_error
+class empty_list : public ListError
 {
 public:
     empty_list(std::string time, std::string filename,
-               std::string classname, std::string methodname) :
-            base_error(time, filename, classname, methodname)
-    {};
-
-    const char *what() const noexcept override
+               std::string classname, std::string methodname) : ListError(
+        time, filename, classname, methodname, "error: Empty list")
     {
-        std::string message = "\nERROR: Empty list. " + error_info;
-        char *cmessage = new char[1 + message.size()];
-        std::strcpy(cmessage, message.c_str());
-        return cmessage;
-    }
+    };
 };
 
-class iterator_error: public base_error
+class iterator_error : public IterError
 {
 public:
     iterator_error(std::string time, std::string filename,
-            std::string classname, std::string methodname) :
-    base_error(time, filename, classname, methodname)
-    {};
-
-    const char * what() const noexcept override
+                   std::string classname, std::string methodname) : IterError(
+        time, filename, classname, methodname, "error: Bad iterator")
     {
-        std::string message = "\nERROR: Bad iterator. " + error_info;
-        char *cmessage = new char[1 + message.size()];
-        std::strcpy(cmessage, message.c_str());
-        return cmessage;
-    }
+    };
 };
 
-class pointer_error : public base_error
+class pointer_error : public IterError
 {
 public:
-    pointer_error(std::string time, std::string filename, std::string classname, std::string methodname) :
-            base_error(time, filename, classname, methodname) {};
-
-    virtual const char* what() const noexcept override
+    pointer_error(std::string time, std::string filename, std::string classname, std::string methodname): IterError(
+        time, filename, classname, methodname, "error: Bad pointer")
     {
-        std::string message = "\nERROR: Bad pointer. " + error_info;
-        char *cmessage = new char[1 + message.size()];
-        std::strcpy(cmessage, message.c_str());
-        return cmessage;
-    }
+    };
 };
 
-class size_error: public base_error
+class size_error : public ListError
 {
 public:
-    size_error(std::string time, std::string filename, std::string classname, std::string methodname) :
-            base_error(time, filename, classname, methodname) {};
-
-    virtual const char* what() const noexcept override
+    size_error(std::string time, std::string filename, std::string classname, std::string methodname) : ListError(
+        time, filename, classname, methodname, "error: The size passed to the method is invalid.")
     {
-        std::string message = "\nERROR: The size passed to the method is invalid." + error_info;
-        char *cmessage = new char[1 + message.size()];
-        std::strcpy(cmessage, message.c_str());
-        return cmessage;
-    }
+    };
 };
 
 #endif //LAB_02_ERRORS_H

@@ -652,6 +652,14 @@ list_iterator<T> list<T>::push_front(const list<U> &data)
 }
 
 template<succeed_type T>
+template<succeed_container C>
+list_iterator<T> list<T>::push_front(const C& container)
+{
+    list<T> ins_list(container);
+    return  this->push_front(ins_list);
+}
+
+template<succeed_type T>
 template<succeed_type U>
     requires std::convertible_to<U, T>
 list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const U &data)
