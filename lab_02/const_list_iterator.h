@@ -8,7 +8,7 @@
 #include <memory>
 #include "list_node.h"
 
-template<typename T>
+template<succeed_type T>
 class const_list_iterator: BaseIterator<T>
 {
 public:

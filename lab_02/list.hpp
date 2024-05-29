@@ -22,13 +22,12 @@ list<T>::list(const list<T> &list)
 
     for (auto node = list.cbegin(); node != list.cend(); ++node)
     {
-        std::shared_ptr<list_node<T>> temp_node = nullptr;
+        std::shared_ptr<list_node<T> > temp_node = nullptr;
 
         try
         {
-            temp_node = std::make_shared<list_node<T>>();
-        }
-        catch (std::bad_alloc &)
+            temp_node = std::make_shared<list_node<T> >();
+        } catch (std::bad_alloc &)
         {
             auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             throw mem_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
@@ -41,7 +40,7 @@ list<T>::list(const list<T> &list)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list<T>::list(const list<U> &list)
 {
     this->size = 0;
@@ -50,13 +49,12 @@ list<T>::list(const list<U> &list)
 
     for (auto node = list.cbegin(); node != list.cend(); ++node)
     {
-        std::shared_ptr<list_node<T>> temp_node = nullptr;
+        std::shared_ptr<list_node<T> > temp_node = nullptr;
 
         try
         {
-            temp_node = std::make_shared<list_node<T>>();
-        }
-        catch (std::bad_alloc &)
+            temp_node = std::make_shared<list_node<T> >();
+        } catch (std::bad_alloc &)
         {
             auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             throw mem_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
@@ -78,7 +76,7 @@ list<T>::list(list<T> &&list) noexcept
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list<T>::list(const U *arr, int size)
 {
     this->size = 0;
@@ -105,7 +103,7 @@ list<T>::list(const U *arr, int size)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list<T>::list(std::initializer_list<U> nodes)
 {
     this->size = 0;
@@ -133,17 +131,32 @@ list<T>::list(const it &begin, const it &end)
 }
 
 template<succeed_type T>
+template<succeed_container C>
+list<T>::list(const C &container)
+{
+    this->size = 0;
+    this->head = nullptr;
+    this->tail = nullptr;
+
+    for (auto i = container.cbegin(); i != container.cend(); ++i)
+    {
+        this->push_back(*i);
+    }
+}
+
+
+template<succeed_type T>
 list<T> &list<T>::operator=(const list<T> &list)
 {
     this->clear();
 
     for (auto node = list.cbegin(); node != list.cend(); ++node)
     {
-        std::shared_ptr<list_node<T>> temp_node = nullptr;
+        std::shared_ptr<list_node<T> > temp_node = nullptr;
 
         try
         {
-            temp_node = std::make_shared<list_node<T>>();
+            temp_node = std::make_shared<list_node<T> >();
         } catch (std::bad_alloc &error)
         {
             auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -159,18 +172,18 @@ list<T> &list<T>::operator=(const list<T> &list)
 
 template<succeed_type T>
 template<succeed_type U>
-requires(std::convertible_to<U,T>)
+    requires(std::convertible_to<U, T>)
 list<T> &list<T>::operator=(const list<U> &list)
 {
     this->clear();
 
     for (auto node = list.cbegin(); node != list.cend(); ++node)
     {
-        std::shared_ptr<list_node<T>> temp_node = nullptr;
+        std::shared_ptr<list_node<T> > temp_node = nullptr;
 
         try
         {
-            temp_node = std::make_shared<list_node<T>>();
+            temp_node = std::make_shared<list_node<T> >();
         } catch (std::bad_alloc &error)
         {
             auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -195,7 +208,7 @@ list<T> &list<T>::operator=(list<T> &&list) noexcept
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::push_back(const std::shared_ptr<list_node<T>> &node)
+list_iterator<T> list<T>::push_back(const std::shared_ptr<list_node<T> > &node)
 {
     if (!node)
     {
@@ -203,11 +216,11 @@ list_iterator<T> list<T>::push_back(const std::shared_ptr<list_node<T>> &node)
         throw pointer_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
     }
 
-    std::shared_ptr<list_node<T>> tmp_node = nullptr;
+    std::shared_ptr<list_node<T> > tmp_node = nullptr;
 
     try
     {
-        tmp_node = std::make_shared<list_node<T>>();
+        tmp_node = std::make_shared<list_node<T> >();
     } catch (std::bad_alloc &exec)
     {
         auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -220,8 +233,7 @@ list_iterator<T> list<T>::push_back(const std::shared_ptr<list_node<T>> &node)
     {
         this->head = tmp_node;
         this->tail = tmp_node;
-    }
-    else
+    } else
     {
         this->tail->set_next(tmp_node);
         this->tail = tmp_node;
@@ -233,7 +245,7 @@ list_iterator<T> list<T>::push_back(const std::shared_ptr<list_node<T>> &node)
 }
 
 template<succeed_type T>
-list_iterator<T> list<T>::push_front(const std::shared_ptr<list_node<T>> &node)
+list_iterator<T> list<T>::push_front(const std::shared_ptr<list_node<T> > &node)
 {
     if (!node)
     {
@@ -257,10 +269,10 @@ list_iterator<T> list<T>::push_front(const std::shared_ptr<list_node<T>> &node)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list_iterator<T> list<T>::push_back(const U &data)
 {
-    std::shared_ptr<list_node<T>> tmp{std::make_shared<list_node<T>>()};
+    std::shared_ptr<list_node<T> > tmp{std::make_shared<list_node<T> >()};
 
     tmp->set(data);
 
@@ -269,16 +281,16 @@ list_iterator<T> list<T>::push_back(const U &data)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list_iterator<T> list<T>::push_back(const list<U> &list)
 {
     for (auto node = list.cbegin(); node != list.cend(); ++node)
     {
-        std::shared_ptr<list_node<T>> temp_node = nullptr;
+        std::shared_ptr<list_node<T> > temp_node = nullptr;
 
         try
         {
-            temp_node = std::make_shared<list_node<T>>();
+            temp_node = std::make_shared<list_node<T> >();
         } catch (std::bad_alloc &exec)
         {
             auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -293,8 +305,20 @@ list_iterator<T> list<T>::push_back(const list<U> &list)
 }
 
 template<succeed_type T>
+template<succeed_container C>
+list_iterator<T> list<T>::push_back(const C &container)
+{
+    for (auto i = container.cbegin(); i != container.cend(); ++i)
+    {
+        this->push_back(*i);
+    }
+
+    return this->begin();
+}
+
+template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list<T> &list<T>::merge(const U &data)
 {
     this->push_back(data);
@@ -303,7 +327,7 @@ list<T> &list<T>::merge(const U &data)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list<T> &list<T>::merge(const list<U> &data)
 {
     this->push_back(data);
@@ -311,11 +335,19 @@ list<T> &list<T>::merge(const list<U> &data)
 }
 
 template<succeed_type T>
+template<succeed_container C>
+list<T> &list<T>::merge(const C &container)
+{
+    this->push_back(container);
+    return *this;
+}
+
+template<succeed_type T>
 void list<T>::reverse()
 {
-    std::shared_ptr<list_node<T>> prev(nullptr);
-    std::shared_ptr<list_node<T>> cur(this->head);
-    std::shared_ptr<list_node<T>> next(nullptr);
+    std::shared_ptr<list_node<T> > prev(nullptr);
+    std::shared_ptr<list_node<T> > cur(this->head);
+    std::shared_ptr<list_node<T> > next(nullptr);
 
     while (cur)
     {
@@ -362,13 +394,13 @@ list<T> list<T>::sublist(const const_list_iterator<T> begin, const const_list_it
 }
 
 template<succeed_type T>
-std::shared_ptr<list_node<T>> list<T>::get_head()
+std::shared_ptr<list_node<T> > list<T>::get_head()
 {
     return head;
 }
 
 template<succeed_type T>
-std::shared_ptr<list_node<T>> list<T>::get_tail()
+std::shared_ptr<list_node<T> > list<T>::get_tail()
 {
     return tail;
 }
@@ -399,7 +431,7 @@ T list<T>::pop_front()
 template<succeed_type T>
 T list<T>::remove(const list_iterator<T> &iterator)
 {
-    if (iterator.is_invalid())
+    if (!iterator.is_valid())
     {
         auto timenow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         throw iterator_error(ctime(&timenow), __FILE__, typeid(list).name(), __FUNCTION__);
@@ -419,12 +451,27 @@ T list<T>::remove(const list_iterator<T> &iterator)
     list_iterator<T> temp_iterator = this->begin();
     for (; temp_iterator + 1 != iterator; temp_iterator++);
 
-    T data = temp_iterator->get();
-    temp_iterator->set_next(temp_iterator->get_next()->get_next());
-    this->size--;
+    T data = *temp_iterator;
+    auto tmp_node = temp_iterator.get_node();
+    tmp_node->set_next(tmp_node->get_next()->get_next());
+    --this->size;
 
     return data;
 }
+
+template<succeed_type T>
+list<T> list<T>::remove(const list_iterator<T> &beg, const list_iterator<T> &end)
+{
+    list<T> ans;
+
+    for (auto i = beg; i != end;)
+    {
+        ans.push_back(this->remove(i++));
+    }
+
+    return ans;
+}
+
 
 template<succeed_type T>
 T list<T>::pop_back()
@@ -441,10 +488,9 @@ T list<T>::pop_back()
         data = this->head->get();
         this->head = nullptr;
         this->tail = nullptr;
-    }
-    else
+    } else
     {
-        std::shared_ptr<list_node<T>> ptr = this->head;
+        std::shared_ptr<list_node<T> > ptr = this->head;
 
         while (ptr->get_next() != this->tail)
         {
@@ -483,7 +529,7 @@ int list<T>::get_size()
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list<T> &list<T>::operator+=(const U &data)
 {
     this->push_back(data);
@@ -492,16 +538,24 @@ list<T> &list<T>::operator+=(const U &data)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
-list<T> &list<T>::operator+=(const list <U> &list)
+    requires std::convertible_to<U, T>
+list<T> &list<T>::operator+=(const list<U> &list)
 {
     this->push_back(list);
     return *this;
 }
 
 template<succeed_type T>
+template<succeed_container C>
+list<T> &list<T>::operator+=(const C &container)
+{
+    this->push_back(container);
+    return *this;
+}
+
+template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list<T> list<T>::operator+(const U &data)
 {
     list<T> tmp(this);
@@ -511,8 +565,8 @@ list<T> list<T>::operator+(const U &data)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
-list<T> list<T>::operator+(const list <U> &data)
+    requires std::convertible_to<U, T>
+list<T> list<T>::operator+(const list<U> &data)
 {
     list<T> tmp(*this);
     tmp.push_back(data);
@@ -520,9 +574,20 @@ list<T> list<T>::operator+(const list <U> &data)
 }
 
 template<succeed_type T>
+template<succeed_container C>
+list<T> list<T>::operator+(const C &container)
+{
+    list<T> ans(*this);
+    ans.push_back(container);
+
+    return ans;
+}
+
+
+template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
-bool list<T>::operator==(const list <U> &data) const
+    requires std::convertible_to<U, T>
+bool list<T>::operator==(const list<U> &data) const
 {
     if (this->size != data.size)
         return false;
@@ -540,24 +605,23 @@ bool list<T>::operator==(const list <U> &data) const
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
-bool list<T>::operator!=(const list <U> &data) const
+    requires std::convertible_to<U, T>
+bool list<T>::operator!=(const list<U> &data) const
 {
     return !(*this == data);
 }
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list_iterator<T> list<T>::push_front(const U &data)
 {
-    std::shared_ptr<list_node<T>> ptr = nullptr;
+    std::shared_ptr<list_node<T> > ptr = nullptr;
 
     try
     {
-        ptr = std::make_shared<list_node<T>>();
-    }
-    catch (std::bad_alloc &exception)
+        ptr = std::make_shared<list_node<T> >();
+    } catch (std::bad_alloc &exception)
     {
         auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         throw mem_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
@@ -574,7 +638,7 @@ list_iterator<T> list<T>::push_front(const U &data)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
+    requires std::convertible_to<U, T>
 list_iterator<T> list<T>::push_front(const list<U> &data)
 {
     list_iterator<T> iterator;
@@ -589,8 +653,8 @@ list_iterator<T> list<T>::push_front(const list<U> &data)
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
-list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const U &data)
+    requires std::convertible_to<U, T>
+list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const U &data)
 {
     if (!iterator.is_valid())
     {
@@ -598,11 +662,11 @@ list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const U &data
         throw iterator_error(ctime(&time), __FILE__, typeid(list).name(), __FUNCTION__);
     }
 
-    std::shared_ptr<list_node<T>> temp_node = nullptr;
+    std::shared_ptr<list_node<T> > temp_node = nullptr;
 
     try
     {
-        temp_node = std::make_shared<list_node<T>>();
+        temp_node = std::make_shared<list_node<T> >();
     } catch (std::bad_alloc &exception)
     {
         auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -614,8 +678,7 @@ list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const U &data
     if (iterator == this->begin())
     {
         return push_front(temp_node);
-    }
-    else if (iterator == this->end())
+    } else if (iterator == this->end())
     {
         return this->push_back(temp_node);
     }
@@ -623,11 +686,11 @@ list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const U &data
     list_iterator<T> temp_iterator = this->begin();
     for (; temp_iterator + 1 != iterator; temp_iterator++);
 
-    std::shared_ptr<list_node<T>> ptr = temp_iterator.get_node();
+    std::shared_ptr<list_node<T> > ptr = temp_iterator.get_node();
 
     temp_node->set_next(ptr->get_next());
     ptr->set_next(temp_node);
-    this->size++;
+    ++this->size;
 
     list_iterator<T> insert_iterator(temp_node);
     return insert_iterator;
@@ -635,8 +698,8 @@ list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const U &data
 
 template<succeed_type T>
 template<succeed_type U>
-requires std::convertible_to<U, T>
-list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const list<U> &list)
+    requires std::convertible_to<U, T>
+list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const list<U> &list)
 {
     if (!iterator.is_valid())
     {
@@ -652,6 +715,15 @@ list_iterator<T> list<T>::insert(const list_iterator<U> &iterator, const list<U>
     }
 
     return insert_iterator;
+}
+
+template<succeed_type T>
+template<succeed_container C>
+list_iterator<T> list<T>::insert(const list_iterator<T> &iterator, const C &container)
+{
+    list<T> ins_list(container);
+
+    return  this->insert(iterator, ins_list);
 }
 
 template<succeed_type T_>

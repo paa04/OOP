@@ -9,7 +9,7 @@
 #include "list_node.h"
 #include "base_iterator.h"
 
-template<typename T>
+template<succeed_type T>
 class list_iterator: public BaseIterator<T>
 {
 public:

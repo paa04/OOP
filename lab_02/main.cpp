@@ -118,8 +118,7 @@ int main(void)
     if (list9 == list10)
     {
         std::cout << "done";
-    }
-    else
+    } else
     {
         std::cout << "failed";
     }
@@ -130,8 +129,7 @@ int main(void)
     if (list9 != list10)
     {
         std::cout << "done";
-    }
-    else
+    } else
     {
         std::cout << "failed";
     }
@@ -184,8 +182,7 @@ int main(void)
     try
     {
         list14.insert(list14.begin() + 7, 12);
-    }
-    catch (iterator_error &)
+    } catch (iterator_error &)
     {
         cout << "\nException test #2 succeed";
     }
@@ -195,8 +192,7 @@ int main(void)
     if (list11.begin())
     {
         std::cout << "test1 done ";
-    }
-    else
+    } else
     {
         std::cout << "test1 fail ";
     }
@@ -204,8 +200,7 @@ int main(void)
     if (list11.end())
     {
         std::cout << "test2 fail";
-    }
-    else
+    } else
     {
         std::cout << "test2 done";
     }
@@ -214,8 +209,7 @@ int main(void)
     if (list11.cbegin())
     {
         std::cout << "test1 done ";
-    }
-    else
+    } else
     {
         std::cout << "test1 fail ";
     }
@@ -223,8 +217,7 @@ int main(void)
     if (list11.cend())
     {
         std::cout << "test2 fail";
-    }
-    else
+    } else
     {
         std::cout << "test2 done";
     }
@@ -236,6 +229,24 @@ int main(void)
     list<int> sublist = list15.sublist(list15.cbegin() + 3, list15.cend());
 
     cout << endl << sublist;
+
+    list15.remove(list15.begin() + 3, list15.begin() + 6);
+
+    cout << endl << list15;
+
+    vector<double> lol = {1, 2, 3};
+
+    list15 += lol;
+
+    cout << endl << list15;
+
+    list<int> list16 = list15 + lol;
+
+    cout << endl << list16;
+
+    list15.insert(list15.begin() + 1, lol);
+
+    cout << endl << list15;
 
     return 0;
 }
